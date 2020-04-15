@@ -45,6 +45,13 @@ pipeline
      cd deploy
      tar -xvf frontend-${BUILD_NUMBER}.tar
      ls -ltr
+     gsutil acl ch -u AllUsers:R gs://kashmira-shevade
+     gsutil defacl set public-read gs://kashmira-shevade
+     gsutil web set -m index.html -e index.html gs://kashmira-shevade
+     
+     gsutil cp -r * gs://kashmira-shevade
+     gsutil setmeta -h "content-type: image/svg+xml" gs://kashmira-shevade/static/media/*.svg
+     
      '''
      }
     }
