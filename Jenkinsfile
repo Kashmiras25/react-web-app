@@ -19,14 +19,15 @@ pipeline
          cleanWs()
          checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '${Repobranch}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/Kashmiras25/react-web-app.git']]]
           sh '''
-          ls -ltr
-          npm install
-          npm run build
-          ls -ltr
-          tar -cvf frontend-${BUILD_NUMBER}.tar *
-          cp frontend-${BUILD_NUMBER}.tar ${WORKSPACE}/
-          ls -ltr
-          '''
+         ls -ltr
+         npm install
+         npm run build
+         ls -ltr
+         cd build/
+         tar -cvf frontend-${BUILD_NUMBER}.tar *
+         cp frontend-${BUILD_NUMBER}.tar ${WORKSPACE}/
+         ls -ltr
+         '''
           
         
         }
@@ -40,7 +41,7 @@ pipeline
      sh '''
      rm -rf deploy
      mkdir deploy
-     cp tar -xvf frontend-${BUILD_NUMBER}.tar deploy/
+     cp -r frontend-${BUILD_NUMBER}.tar deploy/
      cd deploy
      tar -xvf frontend-${BUILD_NUMBER}.tar
      ls -ltr
